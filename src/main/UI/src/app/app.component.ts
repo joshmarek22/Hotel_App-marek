@@ -14,6 +14,8 @@ import {map} from "rxjs/operators";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  welcomeMessageEng$!: Observable<string>
+  welcomeMessageFre$!: Observable<string>
 
   constructor(private httpClient:HttpClient){}
 
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit{
   currentCheckOutVal!:string;
 
     ngOnInit(){
+
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
         checkout: new FormControl(' ')
