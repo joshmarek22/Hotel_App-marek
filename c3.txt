@@ -1,0 +1,8 @@
+To deploy the multithreaded Spring application to the cloud,
+I would use Amazon Web Services (AWS). I would start by building the Docker image using the existing Dockerfile,
+which packages the Java back end and Angular front end into a single container.
+The Docker image would then be pushed to Amazon Elastic Container Registry (ECR) for storage.
+From there, I would deploy the application using Amazon Elastic Container Service (ECS) with a Fargate launch type,
+which handles the server infrastructure automatically. An Application Load Balancer would route traffic to the
+ application on port 8080, making it publicly accessible. This approach ensures the application is scalable and
+ easy to update by redeploying new Docker images.

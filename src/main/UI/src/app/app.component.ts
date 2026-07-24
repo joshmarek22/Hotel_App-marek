@@ -29,15 +29,20 @@ export class AppComponent implements OnInit{
   request!:ReserveRoomRequest;
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
+  welcomeMessages!:string[];
+  timeMessages!:string[];
 
     ngOnInit(){
+      this.getWelcomeMessages();
+      this.getTimeMessages();
 
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
         checkout: new FormControl(' ')
       });
 
- //     this.rooms=ROOMS;
+      this.getWelcomeMessages().subscribe(msgs => {this.welcomeMessages=msgs;}
+      )
 
 
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
@@ -47,6 +52,8 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+
+    this.getTimeMessages().subscribe(times => {this.timeMessages=times;})
   }
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
@@ -84,6 +91,16 @@ export class AppComponent implements OnInit{
 
 
        return this.httpClient.get(this.baseURL + '/room/reservation/v1?checkin='+ this.currentCheckInVal + '&checkout='+this.currentCheckOutVal, {responseType: 'json'});
+    }
+
+    getTimeMessages(): Observable<any>{
+      return this.httpClient.get(this.baseURL + '/resources/times', {responseType: 'json'})
+    }
+
+  protected readonly Math = Math;
+
+    getWelcomeMessages(): Observable<any>{
+      return this.httpClient.get(this.baseURL + '/resources/welcome', {responseType: 'json'});
     }
 
   }
